@@ -59,8 +59,31 @@ If you're on the same path — feel free to clone, learn, and connect with me!
 - SQL case studies (sales, marketing, e-commerce)  
 - Interactive dashboards connected to SQL queries (Power BI / Jupyter notebooks)
 - And many more.
+  
+~~~~~~~~~~
+## Lesson 1: INNER JOIN vs LEFT JOIN
 
-  Look forward to it!
+### Concept Overview
+- **INNER JOIN**: Returns only rows where there’s a match in both tables.
+- **LEFT JOIN**: Returns all rows from the left table, and matches (if any) from the right table.
 
+### 🧪 Use Case Example
+Imagine you want to see all customers who have made orders (INNER), or all customers with or without orders (LEFT).
 
+### 🧾 Queries Covered
+
+```sql
+-- INNER JOIN
+SELECT c.customer_name, o.order_id
+FROM customers c
+INNER JOIN orders o ON c.customer_id = o.customer_id;
+
+-- LEFT JOIN
+SELECT c.customer_name, o.order_id
+FROM customers c
+LEFT JOIN orders o ON c.customer_id = o.customer_id;
+```
+~~~~~~~~~~
+
+  Look forward to more!
 ==========** Thank You **==========
