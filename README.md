@@ -28,7 +28,7 @@ Whether you're starting from scratch or brushing up for data roles, this repo of
 
 -----------------------------------------------------------------------------------------------
 
-### How to Use
+### How to Use?
 
 1. Read the accompanying `README.md`.
 2. Run the `.sql` scripts on your local SQL engine or an online sandbox (e.g., [https://sqliteonline.com/](https://sqliteonline.com/))
@@ -77,7 +77,8 @@ __________________________________________________________________
 SELECT c.customer_name, o.order_id
 FROM customers c
 INNER JOIN orders o ON c.customer_id = o.customer_id;
-
+```
+```
 -- LEFT JOIN
 SELECT c.customer_name, o.order_id
 FROM customers c
@@ -87,7 +88,7 @@ __________________________________________________________________
 ## Lecture 2: Lecture 2: Deep Dive into JOINs with a Practical Example
 __________________________________________________________________
 
-### Welcome back  
+### Welcome back!
 
 In the previous lecture, we got introduced to the idea of combining data from two tables using `INNER JOIN` and `LEFT JOIN`.  
 We talked about why joins are useful because in most databases, data is split across tables for better organization.  
