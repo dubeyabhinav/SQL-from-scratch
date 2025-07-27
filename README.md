@@ -164,5 +164,8 @@ Using just two types of joins, we already have the ability to:
 | Customers who placed orders                      | `INNER JOIN` |
 | All customers, whether or not they placed orders | `LEFT JOIN`  |
 
-  Look forward to more!
-==========** Thank You **==========
+  
+  
+> Look forward to more!
+  
+==========> **Thank You** <==========
