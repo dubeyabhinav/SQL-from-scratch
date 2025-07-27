@@ -131,6 +131,7 @@ FROM customers c
 INNER JOIN orders o ON c.customer_id = o.customer_id;
 ```
 **Output:**
+
 <img width="460" height="149" alt="image" src="https://github.com/user-attachments/assets/074b14fd-3070-4079-b3f4-da114dff9cb2" />
 
 
@@ -144,8 +145,24 @@ FROM customers c
 LEFT JOIN orders o ON c.customer_id = o.customer_id;
 ```
 **Output:**
+
 <img width="484" height="207" alt="image" src="https://github.com/user-attachments/assets/3df45da2-9c21-4230-9c6b-546ed595e0ee" />
 
+### Why this matters?
+
+Using just two types of joins, we already have the ability to:
+
+> Find which customers placed orders
+> Find customers who didn’t place any orders
+> Avoid mismatches like orders without real customers
+> This becomes even more powerful when working with 3 or more related tables.
+
+### Summary 02
+
+| What you want to find                            | What to use? |
+| ------------------------------------------------ | ------------ |
+| Customers who placed orders                      | `INNER JOIN` |
+| All customers, whether or not they placed orders | `LEFT JOIN`  |
 
   Look forward to more!
 ==========** Thank You **==========
