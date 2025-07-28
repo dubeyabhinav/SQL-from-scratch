@@ -1,4 +1,4 @@
-<img width="698" height="264" alt="image" src="https://github.com/user-attachments/assets/3aa78a78-3775-4b5d-a9de-6dfb61d2b332" /># SQL-from-scratch
+# SQL-from-scratch
 A beginner-to-advanced SQL learning journey with clean examples, clear explanations, and real-world use cases. Ideal for learners, interview prep, and refreshing SQL concepts! Let's go.
 
 SQL Lessons From Scratch:-
