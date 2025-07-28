@@ -12,19 +12,18 @@ Whether you're starting from scratch or brushing up for data roles, this repo of
   > Markdown guides for every major topic  
   > LinkedIn-friendly formats (great for sharing + teaching others)
 
------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------
 
 ### What's Inside?
 
-    ________________________________________________________________________________________
-    | Topics              | What You'll Learn                                              |
-    |---------------------|----------------------------------------------------------------|
-    | Joins               | INNER, LEFT, RIGHT, FULL, and CROSS joins — with Venn visuals  |
-    | Window Functions    | ROW_NUMBER, RANK, LAG/LEAD, Moving Averages                    |
-    | Subqueries          | Correlated vs Uncorrelated, `EXISTS`, `IN`, `NOT IN`           |
-    | Aggregations        | `GROUP BY`, `HAVING`, multi-level summaries                    |
-    | A/B Testing SQL     | Test/control setup, conversions, and metrics                   |
-    | Datasets            | Sample `customers`, `orders`, and more for hands-on practice   |
+| **Topics**          | **What You'll Learn**                                          |
+|---------------------|----------------------------------------------------------------|
+| Joins               | INNER, LEFT, RIGHT, FULL, and CROSS joins — with Venn visuals  |
+| Window Functions    | ROW_NUMBER, RANK, LAG/LEAD, Moving Averages                    |
+| Subqueries          | Correlated vs Uncorrelated, `EXISTS`, `IN`, `NOT IN`           |
+| Aggregations        | `GROUP BY`, `HAVING`, multi-level summaries                    |
+| A/B Testing SQL     | Test/control setup, conversions, and metrics                   |
+| Datasets            | Sample `customers`, `orders`, and more for hands-on practice   |
 
 -----------------------------------------------------------------------------------------------
 
@@ -106,6 +105,8 @@ Imagine you're running a basic e-commerce site. You have two tables:
 | 1           | Alice    |
 | 2           | Bob      |
 | 3           | Charlie  |
+| :           |  :       |
+
 
 #### Table 2: `orders`
 
@@ -113,13 +114,15 @@ Imagine you're running a basic e-commerce site. You have two tables:
 |----------|--------------|-------------|
 | 101      | 1            | Laptop      |
 | 102      | 2            | Headphones  |
-| 103      | 4            | Keyboard    |
+| 103      | 3            | Keyboard    |
+| :        |  :           |     :       |
+
 
 _**Note:** Refer the `dummy01.sql` to create the dataset & practice._
 
 Here’s what’s happening:
 - Alice and Bob are customers who placed orders.  
-- Charlie is a customer who hasn't placed any order.  
+- Diana is a customer who hasn't placed any order.  
 - Order ID 103 is linked to a customer ID that doesn't exist in the `customers` table.
 
 ### `INNER JOIN` in Action  
