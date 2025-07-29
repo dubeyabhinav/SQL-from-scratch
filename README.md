@@ -87,6 +87,16 @@ SELECT c.customer_name, o.order_id
 FROM customers c
 LEFT JOIN orders o ON c.customer_id = o.customer_id;
 ```
+
+### Summary 01
+
+In this lecture, we explored two fundamental SQL joins used to combine rows from multiple tables:
+
++**`INNER JOIN`:** Retrieves only those rows that have matching values in both tables. Useful when we only care about related records (e.g., customers who have placed orders).
++ **`LEFT JOIN`:** Returns all rows from the left table, along with matched rows from the right table. If no match exists, NULL is shown for right table columns. This allows us to include all customers, even those without orders.
+
+We applied these concepts using the customers and orders tables from our dummy01 dataset to better understand how data behaves when joined with or without matches.
+
 __________________________________________________________________
 ## Lecture 2: Lecture 2: Deep Dive into JOINs with a Practical Example
 __________________________________________________________________
@@ -173,12 +183,12 @@ Using just two types of joins, we already have the ability to:
 | All customers, whether or not they placed orders | `LEFT JOIN`  |
 
 __________________________________________________________________
-## Lecture 2: Lecture 3: RIGHT JOIN and the Elusive FULL OUTER JOIN
+## Lecture 2: Lecture 3: `RIGHT JOIN` and the Elusive `FULL OUTER JOIN`
 __________________________________________________________________
 
 SQL gives us multiple ways to combine tables, but some joins don't get as much spotlight. In this lecture, we're covering two such joins: `RIGHT JOIN` and `FULL OUTER JOIN`. One is rarely used, and the other is rarely supported but both are powerful.
 
-###  1. The RIGHT JOIN: Flipping the Perspective
+###  1. The `RIGHT JOIN`: Flipping the Perspective
 
 A `RIGHT JOIN` works just like a `LEFT JOIN` but in reverse. Instead of keeping all rows from the left table, it keeps all rows from the right table and matches from the left wherever possible.
 
@@ -199,14 +209,14 @@ In our dataset:
 
 As you can see it includes entries even if the `custoer_id` is null or a produst ordered by an unknown custome.
 
-#### Why RIGHT JOIN is Rarely Used?
+#### Why `RIGHT JOIN` is Rarely Used?
   1. Most of the time, data is written or designed with the primary or important table on the left. So, developers naturally use `LEFT JOIN` and get what they want.
 
   2. A `RIGHT JOIN` can always be rewritten as a `LEFT JOIN` by swapping the table order. Because of that, it often goes unused.
 
 But when you're reading legacy code or need to prioritize the second table, `RIGHT JOIN` still has its place.
 
-### 2. FULL OUTER JOIN — The Overlooked Join
+### 2. `FULL OUTER JOIN` — The Overlooked Join
 
 #### Why is it not so popular?
 `FULL OUTER JOIN` gives you everything — matching rows plus all unmatched rows from both tables. It's very useful but not supported in some database systems like **MySQL**, which is why it's often skipped or replaced with a workaround.
@@ -272,7 +282,7 @@ In the next lecture, we'll look at filtering results using WHERE — an essentia
 
 
 __________________________________________________________________
-## Lecture 4: Exploring GROUP BY and HAVING in SQL
+## Lecture 4: Exploring `GROUP BY` and `HAVING` in SQL
 __________________________________________________________________
 
 Welcome to lecture 4! Glad you made it this far! 
@@ -281,7 +291,7 @@ In the previous lectures, we explored how we can connect data from different tab
 
 Today we will focus on two powerful tools in SQL: `GROUP BY` and `HAVING`. These are used when we want to group rows that have the same values in one or more columns and then perform operations on these groups, like counting or summing.
 
-### The Concept of GROUP BY
+### The Concept of `GROUP BY`
 
 Imagine you have a list of orders made by customers. Some customers may have made more than one order. What if you wanted to know how many orders each customer made? Or which customer bought the most products?
 
@@ -292,7 +302,7 @@ This is where GROUP BY comes in. It groups rows based on the values in a particu
 * If we group by `customer_id`, all orders made by the same customer will be treated as one group.
 * We can then apply aggregate functions like `COUNT()`, `SUM()`, or `AVG()` to get summary stats per customer.
 
-### The Role of HAVING
+### The Role of `HAVING`
 
 `WHERE` is used to filter rows before grouping, but what if we want to filter groups after the grouping is done? That’s where `HAVING` helps. It filters the grouped results.
 
@@ -358,5 +368,5 @@ Here, `DISTINCT` ensures that only disctinct products are counted for each _cust
 That’s all for Lecture 4. Practice these examples with your dummy01 dataset and try modifying the queries a bit to explore further.
 
 
-
+For any fedback connect to me.
 ==========> **Thank You** <==========
