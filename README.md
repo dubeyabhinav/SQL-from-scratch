@@ -6,10 +6,14 @@ SQL Lessons From Scratch:-
 Welcome to my structured SQL learning journey where I built one concept at a time, explained as simply as possible.
 
 Whether you're starting from scratch or brushing up for data roles, this repo offers:
-  > Clean `.sql` scripts with comments  
+  > Clean `.sql` scripts with comments
+  
   > Real-world inspired datasets  
+
   > Use cases explained in plain English  
+  
   > Markdown guides for every major topic  
+  
   > LinkedIn-friendly formats (great for sharing + teaching others)
 
 -------------------------------------------------------------------------------------------
@@ -243,10 +247,116 @@ This query combines the result of a `LEFT JOIN` (all customers and their orders,
 #### Takeaway
 While FULL OUTER JOIN is powerful, it’s not always directly available. Understanding how to simulate it helps when working with systems like MySQL.
 
+### Summary 03
+
+In this lecture, we learned how to retrieve data even when relationships between two tables are not complete. We focused on:
+
++ **RIGHT JOIN:** Returns all rows from the right table and the matching rows from the left table. When no match is found on the left, the result shows NULL for left table columns.
++ **FULL OUTER JOIN** (simulated)**:** SQL does not support FULL OUTER JOIN in all databases, so we simulated it by combining a LEFT JOIN and a RIGHT JOIN using UNION. This helps bring together:
+    * All matched records
+    * All unmatched records from the left table
+    * All unmatched records from the right table
+
+
+We used the dummy01 dataset (customers and orders) to demonstrate:
+- Customers who placed orders (matched)
+- Customers with no orders (unmatched left)
+- Orders with no customer record (unmatched right)
+
+This lecture helped us understand how to work with incomplete or mismatched data when combining tables.
+
+
+
+
 In the next lecture, we'll look at filtering results using WHERE — an essential step toward data cleaning and targeted queries.
 
 
+__________________________________________________________________
+## Lecture 4: Exploring GROUP BY and HAVING in SQL
+__________________________________________________________________
 
- Look forward to more!
-  
+Welcome to lecture 4! Glad you made it this far! 
+
+In the previous lectures, we explored how we can connect data from different tables using joins and retrieve specific details. Now that we have a solid understanding of how rows relate to each other, it is time to understand how to analyze groups of data rather than looking at them row by row.
+
+Today we will focus on two powerful tools in SQL: `GROUP BY` and `HAVING`. These are used when we want to group rows that have the same values in one or more columns and then perform operations on these groups, like counting or summing.
+
+### The Concept of GROUP BY
+
+Imagine you have a list of orders made by customers. Some customers may have made more than one order. What if you wanted to know how many orders each customer made? Or which customer bought the most products?
+
+This is where GROUP BY comes in. It groups rows based on the values in a particular column or set of columns.
+
+**For example:**
+
+* If we group by `customer_id`, all orders made by the same customer will be treated as one group.
+* We can then apply aggregate functions like `COUNT()`, `SUM()`, or `AVG()` to get summary stats per customer.
+
+### The Role of HAVING
+
+`WHERE` is used to filter rows before grouping, but what if we want to filter groups after the grouping is done? That’s where `HAVING` helps. It filters the grouped results.
+
+For example:
+
+* If you want to see only those customers who made more than 1 order.
+* You cannot use `WHERE` with `COUNT()`, but you can use `HAVING` with it.
+
+
+Now that we have seen what they do, it's time see how they do it taking some simple examples using the _dummy01_ dataset.
+We have two tables: _'customers'_ and _'orders'_. The orders table contains _order_id_, _customer_id_, and _product_.
+
+**Example 1:** Count how many orders each customer made
+
+```sql
+SELECT customer_id, COUNT(*) AS total_orders
+FROM orders
+GROUP BY customer_id;
+```
+
+This groups all orders by customer and counts how many times each customer appears, as you can see in the output. 
+
+**Output:**
+
+<img width="407" height="176" alt="image" src="https://github.com/user-attachments/assets/f43f0295-02c0-4119-b3c8-6af491b768bf" />
+
+**Example 2:** Show only those customers who made more than one order
+
+```sql
+SELECT customer_id, COUNT(*) AS total_orders
+FROM orders
+GROUP BY customer_id
+HAVING COUNT(*) > 1;
+```
+Here, we first group orders by customer and then filter the result to show only those customers who made more than one order. `HAVING` is used after the grouping step which does the filtering.
+
+**Output:**
+
+<img width="396" height="207" alt="image" src="https://github.com/user-attachments/assets/bd767f72-69a9-4e1e-bf72-934251a1f70c" />
+
+**Example 3:** Count number of products each customer ordered
+
+```sql
+SELECT customer_id, COUNT(DISTINCT product) AS unique_products
+FROM orders
+GROUP BY customer_id;
+```
+
+This query tells us how many different products each customer ordered.
+
+**Output:**
+
+<img width="345" height="199" alt="image" src="https://github.com/user-attachments/assets/a1cb7efc-3211-4cf3-bd24-f20f4a16fbb4" />
+
+Here, `DISTINCT` ensures that only disctinct products are counted for each _customer_id_. So all the cstomers have ordered 2 distinct items. Note that this does not count the order frequency.
+
+### Summary 04
+
++ Use `GROUP BY` when you want to perform calculations across sets of rows that share the same value.
++ Use aggregate functions like `COUNT`, `SUM`, `AVG`, etc. with it.
++ Use `HAVING` to filter groups based on conditions.
+
+That’s all for Lecture 4. Practice these examples with your dummy01 dataset and try modifying the queries a bit to explore further.
+
+
+
 ==========> **Thank You** <==========
