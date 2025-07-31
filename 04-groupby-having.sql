@@ -1,5 +1,5 @@
 -- Lecture 4 SQL Examples: GROUP BY and HAVING
-
+-- Additional problem at the end
 -- Example 1: Count how many orders each customer made
 SELECT customer_id, COUNT(*) AS total_orders
 FROM orders
