@@ -367,6 +367,140 @@ Here, `DISTINCT` ensures that only disctinct products are counted for each _cust
 
 That’s all for Lecture 4. Practice these examples with your dummy01 dataset and try modifying the queries a bit to explore further.
 
+__________________________________________________________________
+## Lecture 5: Subqueries & Derived Tables
+__________________________________________________________________
 
-For any fedback connect to me.
-==========> **Thank You** <==========
+
+Welcome to lecture 5! Glad to see you keep up. That's some good dicipline you have there, much appreciated. Now, let's begin.
+
+### Why Subqueries and Derived Tables?
+
+As SQL tasks become more complex, you often need to answer questions that involve intermediate logic—like filtering based on calculated averages or building queries on top of other queries.
+Subqueries and derived tables let you:
+
+- Re-use logic with minimal code duplication
+- Dynamically filter data based on summary results
+- Make your queries modular and easier to debug
+
+### Example Tables & Data
+
+We use these three tables in the _'dummy02-student-enrollment'_ dataset:
+Overview of tables:
+- students (student_id, student_name, major)
+- courses (course_id, course_name, department)
+- enrollments (enrollment_id, student_id, course_id, grade)
+
+
+
+#### Example 1: Find all Computer Science majors who took courses with above-average class performance.
+
+**Step 1**: Subquery in `WHERE`
+
+First, let’s find the average grade by course.
+
+```sql
+SELECT course_id, AVG(grade) AS avg_grade
+FROM enrollments
+GROUP BY course_id;
+```
+Now, to get IDs of courses where the average grade is greater than `80`:
+
+```sql
+SELECT course_id
+FROM enrollments
+GROUP BY course_id
+HAVING AVG(grade) > 80;
+```
+
+We use this as a subquery in our WHERE clause:
+
+```sql
+SELECT s.student_id, s.student_name
+FROM students s
+JOIN enrollments e ON s.student_id = e.student_id
+WHERE s.major = 'Computer Science'
+  AND e.course_id IN (
+      SELECT course_id
+      FROM enrollments
+      GROUP BY course_id
+      HAVING AVG(grade) > 80
+  );
+```
+
+  What Happened?
+  
+  - The inner subquery finds courses with class average over 80.
+  - The outer query matches Computer Science students who took any such course.
+
+**Step 2:** Derived Table (Inline View) in `FROM`
+
+Suppose now you want to list, for each Computer Science major, the courses they took (and their grades) only in _high-performing_ courses.
+
+We use a derived table for the high-average courses and join:
+
+```sql
+SELECT s.student_id, s.student_name, c.course_name, e.grade
+FROM students s
+JOIN enrollments e ON s.student_id = e.student_id
+JOIN courses c ON e.course_id = c.course_id
+JOIN (
+    SELECT course_id
+    FROM enrollments
+    GROUP BY course_id
+    HAVING AVG(grade) > 80
+) high_avg_courses
+    ON e.course_id = high_avg_courses.course_id
+WHERE s.major = 'Computer Science';
+```
+
+Key Points
+
+- The subquery in the FROM clause creates a temporary results table (high_avg_courses).
+- The main query joins everything together, focusing on Computer Science majors only.
+
+### Subqueries in SELECT, FROM, WHERE — Comparison
+
+| Use Case      | Example Location | Typical Output              |
+|---------------|-----------------|----------------------------|
+| Filtering     | WHERE/IN        | Scalar or list of values   |
+| Derived Table | FROM            | Result set as a table      |
+| Computation   | SELECT          | Single value per row       |
+
+### Edge Cases & Common Pitfalls
+
+**Edge Cases:**
+- If a course has only one enrollment (or all low grades), it might never appear for the >80 cutoff. Always check for empty matches.
+- If a student takes multiple “high-performance” courses, results may have duplicate student rows.
+
+**Common Mistakes:**
+- Mixing WHERE and HAVING: Remember, HAVING is for filters after aggregation, WHERE is for row-level filtering before grouping.
+- Not grouping properly in the subquery: You must group by course_id in subqueries analyzing aggregate data per course.
+
+### Practice
+
+Try these on your own:
+
+- A. Find all Biology majors enrolled in at least two courses where their grade was above the class average for that course.
+- B. List each major with the number of high-performing courses (average >82) that at least one of their students has taken.
+
+### Summary 05
+
+- _Subqueries:_ Powerful for filtering and calculated logic in SELECT/WHERE.
+- _Derived Tables:_ Temporary tables created in the FROM clause to enable multi-step logic in a single query.
+- _Best Practices:_ Always clarify what is being grouped and filtered, and test for edge cases in your data.
+- Both techniques will improve your SQL analysis skills and help you solve real-world problems efficiently.
+
+
+
+
+> Coming up next:
+> "CASE WHEN and Conditional Aggregation" (applying conditionals in aggregation).
+
+
+
+
+For any fedback connect me. Unil I upgrade it again!
+
+
+==========< **Thank You** >==========
