@@ -359,13 +359,28 @@ This query tells us how many different products each customer ordered.
 
 Here, `DISTINCT` ensures that only disctinct products are counted for each _customer_id_. So all the cstomers have ordered 2 distinct items. Note that this does not count the order frequency.
 
+### Edge Cases & Common Pitfalls
+
+**Edge Cases:**
+
+1. Groups with `NULL` values: When grouping columns contain `NULL`s, all `NULL`s are treated as a single group. This can affect counts and aggregates if not handled intentionally.
+2. Empty groups after filtering: Using `HAVING` might exclude all groups, resulting in an empty result set, which can be confusing if unexpected.
+3. `COUNT(DISTINCT ...)` nuances: Counting distinct values counts unique entries only, which may differ significantly from total counts and affect analysis.
+
+**Common Pitfalls:**
+
+1. Using WHERE to filter on aggregated values: WHERE cannot filter on aggregate functions like `COUNT` or `SUM`; `HAVING` must be used instead.
+2. Forgetting to include all non-aggregated columns in `GROUP BY`: All selected columns that are not aggregated must appear in GROUP BY; ignoring this leads to errors or unintended results.
+3. Misunderstanding the order of execution: `HAVING` filters after groups are formed; WHERE filters rows before grouping—mixing these up leads to wrong filtering behavior.
+
+
 ### Summary 04
 
 + Use `GROUP BY` when you want to perform calculations across sets of rows that share the same value.
 + Use aggregate functions like `COUNT`, `SUM`, `AVG`, etc. with it.
 + Use `HAVING` to filter groups based on conditions.
 
-That’s all for Lecture 4. Practice these examples with your dummy01 dataset and try modifying the queries a bit to explore further.
+That’s all for Lecture 4. Practice these examples with your `dummy01` dataset and try modifying the queries a bit to explore further.
 
 __________________________________________________________________
 ## Lecture 5: Subqueries & Derived Tables
@@ -395,7 +410,7 @@ Overview of tables:
 
 #### Example 1: Find all Computer Science majors who took courses with above-average class performance.
 
-**Step 1**: Subquery in `WHERE`
+_Step 1:_ Subquery in `WHERE`
 
 First, let’s find the average grade by course.
 
@@ -404,6 +419,11 @@ SELECT course_id, AVG(grade) AS avg_grade
 FROM enrollments
 GROUP BY course_id;
 ```
+
+**Output:**
+<img width="267" height="182" alt="image" src="https://github.com/user-attachments/assets/46893763-13bd-47c5-a1e9-4ee8cf217acd" />
+
+
 Now, to get IDs of courses where the average grade is greater than `80`:
 
 ```sql
@@ -412,6 +432,10 @@ FROM enrollments
 GROUP BY course_id
 HAVING AVG(grade) > 80;
 ```
+
+**Output:**
+<img width="127" height="214" alt="image" src="https://github.com/user-attachments/assets/36cfaba9-5c80-4549-a354-8d890dbabe62" />
+
 
 We use this as a subquery in our WHERE clause:
 
@@ -428,12 +452,15 @@ WHERE s.major = 'Computer Science'
   );
 ```
 
-  What Happened?
+**Output:**
+<img width="247" height="226" alt="image" src="https://github.com/user-attachments/assets/bfb9d6ad-7723-40f0-83e5-b9fe23cdbae8" />
+
+  **What Happened?**
   
   - The inner subquery finds courses with class average over 80.
   - The outer query matches Computer Science students who took any such course.
 
-**Step 2:** Derived Table (Inline View) in `FROM`
+_Step 2:_ Derived Table (Inline View) in `FROM`
 
 Suppose now you want to list, for each Computer Science major, the courses they took (and their grades) only in _high-performing_ courses.
 
@@ -454,14 +481,14 @@ JOIN (
 WHERE s.major = 'Computer Science';
 ```
 
-Key Points
+_Key Points_
 
 - The subquery in the FROM clause creates a temporary results table (high_avg_courses).
 - The main query joins everything together, focusing on Computer Science majors only.
 
-### Subqueries in SELECT, FROM, WHERE — Comparison
+### Subqueries in `SELECT`, `FROM`, `WHERE` — Comparison
 
-| Use Case      | Example Location | Typical Output              |
+| Use Case      | Example Location | Typical Output            |
 |---------------|-----------------|----------------------------|
 | Filtering     | WHERE/IN        | Scalar or list of values   |
 | Derived Table | FROM            | Result set as a table      |
@@ -493,7 +520,7 @@ Try these on your own:
 
 
 
-
+Practice more on our own dataset
 > Coming up next:
 > "CASE WHEN and Conditional Aggregation" (applying conditionals in aggregation).
 
